@@ -53,11 +53,10 @@ class Main {
   public static Object[] cardDivide(Object[] deck){
     Object[] newArr = new String[7];
     System.out.println(Arrays.toString(deck));
-    for(int i3 = 0; i3 < 7; i3++){
-      System.out.println(i3 + " INDEX OF CARDDIVIDE");
-      newArr[i3] = deck[i3];
-      System.out.println(deck[i3].toString() + "THIS SHOULD BE REMOVED");
-      deck = addArray(deck, deck[i3].toString(),false);
+    for(int i = 0; i < 7; i++){
+      System.out.println(i + " INDEX OF CARDDIVIDE");
+      newArr[i] = deck[0];
+      deck = addArray(deck, deck[0].toString(),false);
     }
     return newArr;
   }
