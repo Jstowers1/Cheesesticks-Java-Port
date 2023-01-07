@@ -14,6 +14,7 @@ class Main {
     String[] strings = Arrays.stream(arr).toArray(String[]::new);
     //String value = new String(valu.toString());
     ArrayList<String> arrList = new ArrayList<String>();
+    System.out.println(value + "WOO VALUE!!");
     for(int i = 0; i < arr.length;i++){
       arrList.add(strings[i]);
     }
@@ -25,6 +26,7 @@ class Main {
     //Convert Arraylist to Array 
     Object[] newArr = new Object[arrList.size()];
     newArr = arrList.toArray(newArr);
+    System.out.println(Arrays.toString(newArr)+" NEW ARRAY");
     return(newArr);
   }
   
@@ -50,9 +52,12 @@ class Main {
   //Divides a deck into a list of 7
   public static Object[] cardDivide(Object[] deck){
     Object[] newArr = new String[7];
-    for(int i = 0; i < 7; i++){
-      newArr[i] = deck[i];
-      deck = addArray(deck, deck[i].toString(),false);
+    System.out.println(Arrays.toString(deck));
+    for(int i3 = 0; i3 < 7; i3++){
+      System.out.println(i3 + " INDEX OF CARDDIVIDE");
+      newArr[i3] = deck[i3];
+      System.out.println(deck[i3].toString() + "THIS SHOULD BE REMOVED");
+      deck = addArray(deck, deck[i3].toString(),false);
     }
     return newArr;
   }
@@ -60,7 +65,7 @@ class Main {
   //Produce the arrays that will be used for the bot players
   public static Object[][] botDeck(Object[] deck, int botCount){
     Object[][] botCards = new Object[botCount][1];
-    Integer playerNum = new Integer(0);
+    Integer playerNum = (0);
     Object[] playerNumber = new Object[1];
     for(int i = 0; i<botCount;i++){
       playerNum = i;
@@ -95,6 +100,7 @@ class Main {
     //11/6 signoff
     botCards = botDeck(deck, botCount);
     System.out.println(Arrays.deepToString(botCards));
+    System.out.println(one);
     scan.close();
   }
 }
