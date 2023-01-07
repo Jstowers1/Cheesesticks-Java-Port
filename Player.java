@@ -2,7 +2,7 @@ class Player{
   String[] cards;
   int playerNum;
   boolean ai;
-  public Player(String[] array, int playerNumber, boolean aiCheck){
+  public Player(String[] array,int playerNumber, boolean aiCheck){
     cards = array;
     playerNum = playerNumber;
     ai = aiCheck;
