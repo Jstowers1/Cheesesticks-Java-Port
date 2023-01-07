@@ -6,7 +6,7 @@ class Main {
   //TRUE IS TO ADD
   public static String[] addArray(String[] arr, String value, boolean addCheck){
     ArrayList<String> arrList = new ArrayList<String>();
-    for(int i = 0; i<arrList.size();i++){
+    for(int i = 0; i < arr.length;i++){
       arrList.add(arr[i]);
     }
     System.out.println(value);
@@ -16,12 +16,11 @@ class Main {
       arrList.remove(value);
     }
     //Convert Arraylist to Array 
-    System.out.println(arrList);
+    System.out.println(arrList+" HELLO THIS IS ALSIT");
     String[] newArr = new String[arrList.size()];
     System.out.println(java.util.Arrays.toString(newArr));
     newArr = arrList.toArray(newArr);
     return(newArr);
-    
   }
   
   //Generate a random number of any range
@@ -30,30 +29,30 @@ class Main {
 }
 
   //Shuffle a deck of cards
-  public static String[] shufle(String[] deck){
+  public static void shufle(String[] deck){
     int randomNumber;
     String[] newDeck = new String[52];
-    for(int i = 0; i<deck.length; i++){
-        randomNumber = getRandomNumber(0,deck.length-1);
-        newDeck[i] = deck[randomNumber];
-        
-        deck = addArray(deck, deck[randomNumber], false);
+    System.out.println(deck.length);
+    int i = 0;
+    while(i <= deck.length*75){
+      randomNumber = getRandomNumber(0,deck.length-1);
+      newDeck[i] = deck[randomNumber];
+      deck = addArray(deck, deck[randomNumber],false);
+      System.out.println("ITERATION!"+ i);
+      System.out.println(deck.length);
+      i++;
     }
-    System.out.println(deck);
-    return(newDeck);
   }
   
   //Divides a deck into a list of 7
   public static void cardDivide(String[] deck){
     
   }
-
   
   public static void main(String[] args) {
     //Master Deck, do not touch!
-    String[] deck = new String[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K"};
-    deck = shufle(deck);
-    System.out.println(java.util.Arrays.toString(deck));
+    String[] deck = new String[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
+    shufle(deck);
     
     String[] array = new String[] {"1","2", "3", "4"};
     Player one = new Player(array, 1, false);
