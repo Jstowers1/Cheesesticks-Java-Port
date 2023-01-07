@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.*;
 class Main {
+  //Master Deck, do not touch!
+  static String[] deck = new String[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
   //Add/Subtract to a list
   //FALSE IS TO SUBTRACT
   //TRUE IS TO ADD
@@ -40,16 +42,18 @@ class Main {
   }
   
   //Divides a deck into a list of 7
-  public static void cardDivide(String[] deck){
-    
+  public static String[] cardDivide(String[] deck){
+    String[] newArr = new String[7];
+    for(int i = 0; i < 7; i++){
+      newArr[i] = deck[i];
+      deck = addArray(deck, deck[i],false);
+    }
+    return newArr;
   }
   
   public static void main(String[] args) {
-    //Master Deck, do not touch!
-    String[] deck = new String[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
     deck = shufle(deck);
-    String[] array = new String[] {"1","2", "3", "4"};
-    Player one = new Player(array, 1, false);
+    Player one = new Player(cardDivide(deck), 1, false);
     System.out.println(one);
   }
 }
