@@ -1,20 +1,22 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.*;
 class Main {
   //Master Deck, do not touch!
-  static Object[] deck = new Object[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
-
+  public static class Global {
+    public static Object[] deck = new Object[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
+  }
+  
   //Add/Subtract to a list
   //FALSE IS TO SUBTRACT
   //TRUE IS TO ADD
   public static Object[] Deck(){
-    return deck;
+    return Global.deck;
   }
+
   public static Object[] addArray(Object[] arr, String value, boolean addCheck){
     String[] strings = Arrays.stream(arr).toArray(String[]::new);
-    //String value = new String(valu.toString());
     ArrayList<String> arrList = new ArrayList<String>();
-    System.out.println(value + "WOO VALUE!!");
     for(int i = 0; i < arr.length;i++){
       arrList.add(strings[i]);
     }
@@ -26,7 +28,6 @@ class Main {
     //Convert Arraylist to Array 
     Object[] newArr = new Object[arrList.size()];
     newArr = arrList.toArray(newArr);
-    System.out.println(Arrays.toString(newArr)+" NEW ARRAY");
     return(newArr);
   }
   
@@ -36,51 +37,48 @@ class Main {
 }
 
   //Shuffle a deck of cards
-  public static Object[] shufle(Object[] deck){
+  public static Object[] shufle(){
     int randomNumber;
     Object[] newDeck = new Object[52];
     int i = 0;
-    while(i <= deck.length*75){
-      randomNumber = getRandomNumber(0,deck.length-1);
-      newDeck[i] = deck[randomNumber];
-      deck = addArray(deck, deck[randomNumber].toString(),false);
+    while(i < Global.deck.length*75){
+      randomNumber = getRandomNumber(0,Global.deck.length-1);
+      newDeck[i] = Global.deck[randomNumber];
+      Global.deck = addArray(Global.deck, Global.deck[randomNumber].toString(),false);
       i++;
     }
     return newDeck;
   }
   
   //Divides a deck into a list of 7
-  public static Object[] cardDivide(Object[] deck){
+  public static Object[] cardDivide(){
     Object[] newArr = new String[7];
-    System.out.println(Arrays.toString(deck));
     for(int i = 0; i < 7; i++){
-      System.out.println(i + " INDEX OF CARDDIVIDE");
-      newArr[i] = deck[0];
-      deck = addArray(deck, deck[0].toString(),false);
+      newArr[i] = Global.deck[0];
+      Global.deck = addArray(Global.deck, Global.deck[0].toString(),false);
     }
     return newArr;
   }
 
   //Produce the arrays that will be used for the bot players
-  public static Object[][] botDeck(Object[] deck, int botCount){
-    Object[][] botCards = new Object[botCount][1];
+  public static Object[][][] botDeck(int botCount){
+    Object[][][] botCards = new Object[botCount][1][1];
     Integer playerNum = (0);
     Object[] playerNumber = new Object[1];
     for(int i = 0; i<botCount;i++){
       playerNum = i;
-      playerNumber[0] = playerNum.toString();
-      botCards[i] = playerNumber;
-      botCards[i][0] = cardDivide(deck);
+      playerNumber[0] = playerNum;
+      botCards[i][0] = playerNumber;
+      botCards[i][0][0] = cardDivide();
     }
-
     return botCards;
   }
   
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
     System.out.println("Welcome to Cheesesticks!");
-    deck = shufle(deck);
-    Player one = new Player(cardDivide(deck), 1, false);
+    Global.deck = shufle();
+    Player one = new Player(cardDivide(), 1, false);
     System.out.println(one);
     //Get the proper number of other bots
     int playerCount = 1;
@@ -91,15 +89,16 @@ class Main {
       playerCount = scan.nextInt();
     }
     int botCount = playerCount-1;
-    Object[][] botCards = new Object[botCount][1];
+    Object[][][] botCards = new Object[botCount][1][1];
     //Use two-dimensional arrays to hold information for players
     //D1 - Player Number
     //D2 - Deck for each player 
     //Maybe turn this into an array of objects? Would make sense in the end 
     //11/6 signoff
-    botCards = botDeck(deck, botCount);
+    botCards = botDeck(botCount);
     System.out.println(Arrays.deepToString(botCards));
     System.out.println(one);
     scan.close();
+
   }
 }
