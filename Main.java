@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.*;
 class Main {
+  @Override
+  public String toString() {
+    return "The string representation";
+  }
+
   //Master Deck, do not touch!
   public static class Global {
     public static Object[] deck = new Object[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
@@ -61,15 +66,11 @@ class Main {
   }
 
   //Produce the arrays that will be used for the bot players
-  public static Object[][][] botDeck(int botCount){
-    Object[][][] botCards = new Object[botCount][1][1];
-    Integer playerNum = (0);
-    Object[] playerNumber = new Object[1];
+  public static Object[][] botDeck(int botCount){
+    Object[][] botCards = new Object[botCount][1];
     for(int i = 0; i<botCount;i++){
-      playerNum = i;
-      playerNumber[0] = playerNum;
-      botCards[i][0] = playerNumber;
-      botCards[i][0][0] = cardDivide();
+      Object[][] botCard = new Object[][]{{i+2, cardDivide()}};
+      botCards[i] = botCard;
     }
     return botCards;
   }
@@ -79,7 +80,6 @@ class Main {
     System.out.println("Welcome to Cheesesticks!");
     Global.deck = shufle();
     Player one = new Player(cardDivide(), 1, false);
-    System.out.println(one);
     //Get the proper number of other bots
     int playerCount = 1;
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
@@ -89,16 +89,16 @@ class Main {
       playerCount = scan.nextInt();
     }
     int botCount = playerCount-1;
-    Object[][][] botCards = new Object[botCount][1][1];
+    Object[][] botCards = new Object[botCount][1];
     //Use two-dimensional arrays to hold information for players
     //D1 - Player Number
     //D2 - Deck for each player 
     //Maybe turn this into an array of objects? Would make sense in the end 
     //11/6 signoff
     botCards = botDeck(botCount);
-    System.out.println(Arrays.deepToString(botCards));
     System.out.println(one);
     scan.close();
-
+    //Object[][] x = new Object[][]{{"HELLo", "help"}};
+    System.out.println(Arrays.deepToString(botCards));
   }
 }
