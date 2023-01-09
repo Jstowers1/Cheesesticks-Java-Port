@@ -17,10 +17,6 @@ class Main {
   //Add/Subtract to a list
   //FALSE IS TO SUBTRACT
   //TRUE IS TO ADD
-  public static Object[] Deck(){
-    return Global.deck;
-  }
-
   public static Object[] addArray(Object[] arr, String value, boolean addCheck){
     String[] strings = Arrays.stream(arr).toArray(String[]::new);
     ArrayList<String> arrList = new ArrayList<String>();
@@ -115,7 +111,6 @@ class Main {
     }
     return cards;
   }
-
   //Check to see if there is 4 of a kind in the deck
   public static boolean cheeseCheck(Object[][] playerDeck, int playerNum){
     int count = 0;
@@ -181,6 +176,16 @@ class Main {
     }else{
       System.out.println("no cheese :(");
     }
+
+    /*
+     * Update for 1/8/23, 10:00PM
+     * I have finished atleast 70%
+     * I can add, remove to a deck
+     * Turn a deck into a string
+     * Check if there's 4 of a kind in someone's hand
+     * Turn player array's into two strings, compare from there, add the value to player array, remove from other
+     */
+
     scan.close();
   }
 }
