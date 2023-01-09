@@ -116,27 +116,30 @@ class Main {
     return cards;
   }
 
-  
-
   //Check to see if there is 4 of a kind in the deck
-  public static boolean cheeseCheck(Object[][] playerDec, int playerNum){
+  public static boolean cheeseCheck(Object[][] playerDeck, int playerNum){
     int count = 0;
-    Object[] x23 = new Object[]{"4","3","4","3","4","6","4"};
-    Object[][] playerDeck = new Object[][]{{1, x23}};
+    //Object[] x23 = new Object[]{"4","3","4","3","4","6","4"};
+    //Object[][] playerDeck = new Object[][]{{1, x23}};
     String[] player = new String[5];
     player = deckToString(playerDeck,1);
     System.out.println(Arrays.toString((player)));
     String play = new String("");
     String set = new String("");
     for(int i = 0; i < player.length; i++){
+      count = 0;
       int i2 = 0;
       while(i2 < 13){
         play = player[i];
         set = Global.oneSet[i2];
         if(play.equals(set)){
-          count++;
+          for(int i4 = 0; i4 < player.length; i4++){
+            if(player[i4].equals(set)){
+              count++;
+            }
+          }
         }
-        if(count%4 == 0 && count>0){
+        if(count == 4){
           return true;
         }
         i2++;
