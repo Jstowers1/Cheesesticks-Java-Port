@@ -76,56 +76,58 @@ class Main {
     }
     return botCards;
   }
-  
-  //Splits the Chew-Dee array into a string, fit for the player and use
-  public static String deckToString(Object[][] playerCards, int playerNum){
+  //Couts how many elements are in a string, important for 'deckToString'
+  public static int elemCount(String playerDeck){
+    char elem = ',';
+    int count = 0;
+    for (int i = 0; i < playerDeck.length(); i++){
+      if (playerDeck.charAt(i) == elem){
+        count++;
+      }
+    }
+    return count+1;
+  }
+
+  //Splits the Chew-Dee array into a 1D string array, fit for the player and use
+  public static String[] deckToString(Object[][] playerCards, int playerNum){
+    //Object[][] playerCards = new Object[3][52];
     String playerDeck = Arrays.deepToString(playerCards);
+    System.out.println(Arrays.deepToString(playerCards));
     playerDeck = playerDeck.substring(1, playerDeck.length()-1);
     for(int i = 0; i < (playerNum)*3; i++){
       playerDeck = playerDeck.substring(playerDeck.indexOf("[")+1,playerDeck.length());
     }
     playerDeck = playerDeck.substring(0,playerDeck.indexOf("]"));
-    return playerDeck;
+    String comma = new String(", ");
+    playerDeck += ", ";
+    comma+=playerDeck;
+    playerDeck=comma;
+    String[] cards = new String[elemCount(playerDeck)-2];
+    System.out.println(Arrays.toString(cards));
+    System.out.println(playerDeck);
+    int first;
+    int second;
+    for (int i2 = 0;i2 <= elemCount(playerDeck)*3; i2++){
+      first = playerDeck.indexOf(", ");
+      second = playerDeck.indexOf(", ", first+1);
+      cards[i2] = playerDeck.substring(first, second);
+      playerDeck = playerDeck.substring(second, playerDeck.length());
+    }
+    for (int i3 = 0; i3 < cards.length; i3++){
+      cards[i3] = cards[i3].replaceAll(", ", "");
+    }
+    System.out.println(Arrays.toString(cards));
+    return cards;
   }
 
-  //Removes comma and whitespace from any string passed
-  public static String commaRemove(String playerDeck){
-    String goneNum = new String("");
-    for (int i = 0;i < playerDeck.length()*5; i++){
-      goneNum += playerDeck.substring(0,playerDeck.indexOf(", "));
-      playerDeck = playerDeck.substring(playerDeck.indexOf(", ")+2,playerDeck.length());
-    }
-    goneNum+=playerDeck;
-    return goneNum;
-  }
+  
 
   //Check to see if there is 4 of a kind in the deck
-  public static boolean cheeseCheck(Object[][] playerDe, int playerNum){
+  public static boolean cheeseCheck(Object[][] playerDec, int playerNum){
     int count = 0;
     Object[] x23 = new Object[]{"1","4","4","4","5","6","7"};
-    Object[][] playerDec = new Object[][]{{1, x23}};
-    String playerDeck = new String(commaRemove(deckToString(playerDec, playerNum)));
-    String oneSet = new String(commaRemove((Arrays.toString(Global.oneSet).substring(1,Arrays.toString(Global.oneSet).length()-1))));
-    System.out.println(oneSet);
-    //System.out.println(playerDeck);
-    playerNum--;
-    for(int i = 0; i < playerDeck.length();i++){
-      count = 0;
-      for(int i2 = 0; i2 < oneSet.length();i2++){
-        //System.out.println(playerDeck.substring(playerDeck.indexOf(String.valueOf(i))+1, playerDeck.indexOf(String.valueOf(i))+2));
-        System.out.println(oneSet.substring(i2, i2+1));
-        //System.out.println(playerDeck.substring(playerDeck.indexOf(String.valueOf(i))+1, playerDeck.indexOf(String.valueOf(i))+2).trim().equals(Character.toString(oneSe.charAt(i2)).trim()));
-        if(playerDeck.substring(playerDeck.indexOf(String.valueOf(i))+1, playerDeck.indexOf(String.valueOf(i))+2).trim().equals(Character.toString(oneSet.charAt(i2)).trim())){
-          count++;
-          //System.out.println(count);
-        }
-      
-        if(count%4 == 0 && count>0){
-          System.out.println(count);
-          return true;
-        }
-      }
-    }
+    Object[][] playerDeck = new Object[][]{{1, x23}};
+
     return false;
   }
 
@@ -151,16 +153,18 @@ class Main {
     //11/6 signoff
     playCards = playerDeck(playerCount);
 
-    String oneCards = new String(deckToString(playCards, 1));
-    System.out.printf("Here are your cards: %s\n", oneCards);
+    String[] oneCards = new String[5];
+    oneCards = deckToString(playCards, 1);
+    System.out.printf("Here are your cards: %s\n", Arrays.toString(oneCards));
    
+    /* 
     boolean cheesestick = cheeseCheck(playCards, 1);
     if (cheesestick){
       System.out.println("CHEESE DETECTED");
     }else{
       System.out.println("no cheese :(");
     }
-
+*/
     scan.close();
   }
 }
