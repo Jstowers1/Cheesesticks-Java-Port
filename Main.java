@@ -81,29 +81,45 @@ class Main {
   public static String deckToString(Object[][] playerCards, int playerNum){
     String playerDeck = Arrays.deepToString(playerCards);
     playerDeck = playerDeck.substring(1, playerDeck.length()-1);
-    System.out.println(playerDeck);
     for(int i = 0; i < (playerNum)*3; i++){
       playerDeck = playerDeck.substring(playerDeck.indexOf("[")+1,playerDeck.length());
     }
     playerDeck = playerDeck.substring(0,playerDeck.indexOf("]"));
-    System.out.println(playerDeck);
     return playerDeck;
+  }
+
+  //Removes comma and whitespace from any string passed
+  public static String commaRemove(String playerDeck){
+    String goneNum = new String("");
+    for (int i = 0;i < playerDeck.length()*5; i++){
+      goneNum += playerDeck.substring(0,playerDeck.indexOf(", "));
+      playerDeck = playerDeck.substring(playerDeck.indexOf(", ")+2,playerDeck.length());
+    }
+    goneNum+=playerDeck;
+    return goneNum;
   }
 
   //Check to see if there is 4 of a kind in the deck
   public static boolean cheeseCheck(Object[][] playerDe, int playerNum){
     int count = 0;
-    playerNum--;
-    Object[] x23 = new Object[]{"4","4","4","4","5","6","7"};
+    Object[] x23 = new Object[]{"1","4","4","4","5","6","7"};
     Object[][] playerDec = new Object[][]{{1, x23}};
-    String playerDeck = new String(deckToString(playerDec, playerNum));
+    String playerDeck = new String(commaRemove(deckToString(playerDec, playerNum)));
+    String oneSet = new String(commaRemove((Arrays.toString(Global.oneSet).substring(1,Arrays.toString(Global.oneSet).length()-1))));
+    System.out.println(oneSet);
+    //System.out.println(playerDeck);
+    playerNum--;
     for(int i = 0; i < playerDeck.length();i++){
       count = 0;
-      for(int i2 = 0; i2 < Global.oneSet.length;i2++){
-        if((playerDeck.equals(Global.oneSet[i2]))){
+      for(int i2 = 0; i2 < oneSet.length();i2++){
+        //System.out.println(playerDeck.substring(playerDeck.indexOf(String.valueOf(i))+1, playerDeck.indexOf(String.valueOf(i))+2));
+        System.out.println(oneSet.substring(i2, i2+1));
+        //System.out.println(playerDeck.substring(playerDeck.indexOf(String.valueOf(i))+1, playerDeck.indexOf(String.valueOf(i))+2).trim().equals(Character.toString(oneSe.charAt(i2)).trim()));
+        if(playerDeck.substring(playerDeck.indexOf(String.valueOf(i))+1, playerDeck.indexOf(String.valueOf(i))+2).trim().equals(Character.toString(oneSet.charAt(i2)).trim())){
           count++;
-          System.out.println(count);
+          //System.out.println(count);
         }
+      
         if(count%4 == 0 && count>0){
           System.out.println(count);
           return true;
@@ -118,13 +134,15 @@ class Main {
     System.out.println("Welcome to Cheesesticks!");
     Global.deck = shufle();
     //Get the proper number of other bots
-    int playerCount = 1;
+    int playerCount = 3;
+    /* 
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
     while(!(playerCount >= 2 && playerCount <= 7)){
       System.out.println("Enter a proper value. 2-7 bots?");
       playerCount = scan.nextInt();
     }
+    */
     Object[][] playCards = new Object[playerCount][1];
     //Use two-dimensional arrays to hold information for players
     //D1 - Player Number
@@ -136,14 +154,13 @@ class Main {
     String oneCards = new String(deckToString(playCards, 1));
     System.out.printf("Here are your cards: %s\n", oneCards);
    
-    /*
     boolean cheesestick = cheeseCheck(playCards, 1);
     if (cheesestick){
       System.out.println("CHEESE DETECTED");
     }else{
       System.out.println("no cheese :(");
     }
-    */
+
     scan.close();
   }
 }
