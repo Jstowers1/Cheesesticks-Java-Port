@@ -92,7 +92,6 @@ class Main {
   public static String[] deckToString(Object[][] playerCards, int playerNum){
     //Object[][] playerCards = new Object[3][52];
     String playerDeck = Arrays.deepToString(playerCards);
-    System.out.println(Arrays.deepToString(playerCards));
     playerDeck = playerDeck.substring(1, playerDeck.length()-1);
     for(int i = 0; i < (playerNum)*3; i++){
       playerDeck = playerDeck.substring(playerDeck.indexOf("[")+1,playerDeck.length());
@@ -103,8 +102,6 @@ class Main {
     comma+=playerDeck;
     playerDeck=comma;
     String[] cards = new String[elemCount(playerDeck)-2];
-    System.out.println(Arrays.toString(cards));
-    System.out.println(playerDeck);
     int first;
     int second;
     for (int i2 = 0;i2 <= elemCount(playerDeck)*3; i2++){
@@ -116,7 +113,6 @@ class Main {
     for (int i3 = 0; i3 < cards.length; i3++){
       cards[i3] = cards[i3].replaceAll(", ", "");
     }
-    System.out.println(Arrays.toString(cards));
     return cards;
   }
 
@@ -125,9 +121,28 @@ class Main {
   //Check to see if there is 4 of a kind in the deck
   public static boolean cheeseCheck(Object[][] playerDec, int playerNum){
     int count = 0;
-    Object[] x23 = new Object[]{"1","4","4","4","5","6","7"};
+    Object[] x23 = new Object[]{"4","3","4","3","4","6","4"};
     Object[][] playerDeck = new Object[][]{{1, x23}};
-
+    String[] player = new String[5];
+    player = deckToString(playerDeck,1);
+    System.out.println(Arrays.toString((player)));
+    String play = new String("");
+    String set = new String("");
+    for(int i = 0; i < player.length; i++){
+      int i2 = 0;
+      while(i2 < 13){
+        play = player[i];
+        set = Global.oneSet[i2];
+        if(play.equals(set)){
+          count++;
+        }
+        if(count%4 == 0 && count>0){
+          return true;
+        }
+        i2++;
+      }
+      
+    }
     return false;
   }
 
@@ -155,16 +170,14 @@ class Main {
 
     String[] oneCards = new String[5];
     oneCards = deckToString(playCards, 1);
-    System.out.printf("Here are your cards: %s\n", Arrays.toString(oneCards));
-   
-    /* 
+    System.out.printf("Here are your cards: %s\n",Arrays.toString(oneCards));
+    
     boolean cheesestick = cheeseCheck(playCards, 1);
     if (cheesestick){
       System.out.println("CHEESE DETECTED");
     }else{
       System.out.println("no cheese :(");
     }
-*/
     scan.close();
   }
 }
