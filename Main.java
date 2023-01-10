@@ -66,6 +66,15 @@ class Main {
           desire = scan.next();
           //Work on creating the logic that checks to make sure if desire is within oneset
           //Index through oneSet to check if desire is within
+          boolean cardCheckCheck = false;
+          for(int cardCheck = 0; cardCheck < Functions.Global.oneSet.length; cardCheck++){
+            if(desire.equals(Functions.Global.oneSet[cardCheck])){
+              cardCheckCheck = true;
+            }
+          }
+          if(cardCheckCheck == true){
+            System.out.println("TRUE!!!");
+          }
           Player.cardAsk(p1, players[pAsk-1], desire);
         }
         System.out.println(players[playerTurn]);
