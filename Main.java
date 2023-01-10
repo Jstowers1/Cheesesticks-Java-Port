@@ -3,179 +3,11 @@ import java.util.Arrays;
 import java.util.*;
 
 class Main {
-
-  //Master Deck, do not touch!
-  public static class Global {
-    public static Object[] deck = new Object[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
-    public static String[] oneSet = new String[]{"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
-  }
-  
-  //Add/Subtract to a list
-  //FALSE IS TO SUBTRACT
-  //TRUE IS TO ADD
-  public static Object[] addArray(Object[] arr, String value, boolean addCheck){
-    String[] strings = Arrays.stream(arr).toArray(String[]::new);
-    ArrayList<String> arrList = new ArrayList<String>();
-    for(int i = 0; i < arr.length;i++){
-      arrList.add(strings[i]);
-    }
-    if(addCheck == true){
-      arrList.add(value);
-    }else{
-      arrList.remove(value);
-    }
-    //Convert Arraylist to Array 
-    Object[] newArr = new Object[arrList.size()];
-    newArr = arrList.toArray(newArr);
-    return(newArr);
-  }
-  
-  //Generate a random number of any range
-  public static int getRandomNumber(int min, int max) {
-    return (int) ((Math.random() * (max - min)) + min);
-}
-
-  //Shuffle a deck of cards
-  public static Object[] shufle(){
-    int randomNumber;
-    Object[] newDeck = new Object[52];
-    int i = 0;
-    while(i < Global.deck.length*75){
-      randomNumber = getRandomNumber(0,Global.deck.length-1);
-      newDeck[i] = Global.deck[randomNumber];
-      Global.deck = addArray(Global.deck, Global.deck[randomNumber].toString(),false);
-      i++;
-    }
-    return newDeck;
-  }
-  
-  //Divides a deck into a list of 7
-  public static Object[] cardDivide(){
-    Object[] newArr = new String[7];
-    for(int i = 0; i < 7; i++){
-      newArr[i] = Global.deck[0];
-      Global.deck = addArray(Global.deck, Global.deck[0].toString(),false);
-    }
-    return newArr;
-  }
-
-  //Produce the arrays that will be used for the bot players
-  public static Object[][] playerDeck(int botCount){
-    Object[][] botCards = new Object[botCount][1];
-    for(int i = 0; i<botCount;i++){
-      Object[][] botCard = new Object[][]{{i+1, cardDivide()}};
-      botCards[i] = botCard;
-    }
-    return botCards;
-  }
-  //Couts how many elements are in a string, important for 'deckToString'
-  public static int elemCount(String playerDeck){
-    char elem = ',';
-    int count = 0;
-    for (int i = 0; i < playerDeck.length(); i++){
-      if (playerDeck.charAt(i) == elem){
-        count++;
-      }
-    }
-    return count+1;
-  }
-
-  //Splits the Chew-Dee array into a 1D string array, fit for the player and use
-  public static String[] deckToString(Object[][] playerCards, int playerNum){
-    //Object[][] playerCards = new Object[3][52];
-    String playerDeck = Arrays.deepToString(playerCards);
-    playerDeck = playerDeck.substring(1, playerDeck.length()-1);
-    for(int i = 0; i < (playerNum)*3; i++){
-      playerDeck = playerDeck.substring(playerDeck.indexOf("[")+1,playerDeck.length());
-    }
-    playerDeck = playerDeck.substring(0,playerDeck.indexOf("]"));
-    String comma = new String(", ");
-    playerDeck += ", ";
-    comma+=playerDeck;
-    playerDeck=comma;
-    String[] cards = new String[elemCount(playerDeck)-2];
-    int first;
-    int second;
-    for (int i2 = 0;i2 <= elemCount(playerDeck)*3; i2++){
-      first = playerDeck.indexOf(", ");
-      second = playerDeck.indexOf(", ", first+1);
-      cards[i2] = playerDeck.substring(first, second);
-      playerDeck = playerDeck.substring(second, playerDeck.length());
-    }
-    for (int i3 = 0; i3 < cards.length; i3++){
-      cards[i3] = cards[i3].replaceAll(", ", "");
-    }
-    return cards;
-  }
-  //Check to see if there is 4 of a kind in the deck
-  public static boolean cheeseCheck(Object[][] playerDeck, int playerNum){
-    int count = 0;
-    //Object[] x23 = new Object[]{"4","3","4","3","4","6","4"};
-    //Object[][] playerDeck = new Object[][]{{1, x23}};
-    String[] player = new String[5];
-    player = deckToString(playerDeck,1);
-    System.out.println(Arrays.toString((player)));
-    String play = new String("");
-    String set = new String("");
-    for(int i = 0; i < player.length; i++){
-      count = 0;
-      int i2 = 0;
-      while(i2 < 13){
-        play = player[i];
-        set = Global.oneSet[i2];
-        if(play.equals(set)){
-          for(int i4 = 0; i4 < player.length; i4++){
-            if(player[i4].equals(set)){
-              count++;
-            }
-          }
-        }
-        if(count == 4){
-          return true;
-        }
-        i2++;
-      }
-      
-    }
-    return false;
-  }
-
-  public static Object[] toObj(String[] playerCards){
-    Object[] newArr = new Object[playerCards.length];
-    for(int i = 0; i < playerCards.length;i++){
-      newArr[i] = playerCards[i];
-    }
-    return newArr;
-  }
-  
-  //Pass values to ask and remove cards when a player asks for cards
-  public static void cardAsk(Object[][] playerDeck, int playerAsk, int playerDraw, String wantCard){
-    String[] ask = new String[5];
-    String[] draw = new String[5];
-    ask = deckToString(playerDeck,playerAsk);
-    draw = deckToString(playerDeck,playerDraw);
-    int count = 0;
-    for(int i = 0; i < draw.length; i++){
-      if(draw[i].equals(wantCard)){
-        count++;
-      }
-    }
-    System.out.println(count);
-  
-    for(int i2 = 0; i2<= count; i2++){
-      //System.out.pritn
-      playerDeck[playerAsk][0] = addArray(toObj(ask),wantCard,true);
-      playerDeck[playerDraw][0] = addArray(toObj(draw),wantCard,false);
-    }
-    System.out.println(Arrays.deepToString(playerDeck));
-  }
-  
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
     System.out.println("Welcome to Cheesesticks!");
-    Global.deck = shufle();
+    Functions.Global.deck = Functions.shufle();
     //Get the proper number of other bots
-
     //REPLACE THIS REMOVE THE COMMENTS PLEASSSEEEE
     int playerCount = 3;
     /* 
@@ -186,38 +18,61 @@ class Main {
       playerCount = scan.nextInt();
     }
     */
-    Object[][] playCards = new Object[playerCount][1];
-    //Use two-dimensional arrays to hold information for players
-    //D1 - Player Number
-    //D2 - Deck for each player 
-    //Maybe turn this into an array of objects? Would make sense in the end 
-    //11/6 signoff
-    playCards = playerDeck(playerCount);
-
+    Object[][] playCards = new Object[7][1];
+    playCards = Functions.playerDeck(playerCount);
     String[] oneCards = new String[5];
-    oneCards = deckToString(playCards, 1);
-    System.out.printf("Here are your cards: %s\n",Arrays.toString(oneCards));
-    
-    boolean cheesestick = cheeseCheck(playCards, 1);
-    if (cheesestick){
-      System.out.println("CHEESE DETECTED");
-    }else{
-      System.out.println("no cheese :(");
-    }
+    String[] twoCards = new String[5];
+    String[] threeCards = new String[5];
+    String[] fourCards = new String[5];
+    String[] fiveCards = new String[5];
+    String[] sixCards = new String[5];
+    String[] sevenCards = new String[5];
 
-    /*
-     * Update for 1/8/23, 10:00PM
-     * I have finished atleast 70%
-     * I can add, remove to a deck
-     * Turn a deck into a string
-     * Check if there's 4 of a kind in someone's hand
-     * Turn player array's into two strings, compare from there, add the value to player array, remove from other
-     */
-    System.out.println(Arrays.deepToString(playCards));
-    String want = new String("");
-    System.out.println("INPUT CARD");
-    want = scan.next();
+    oneCards = Functions.deckToString(playCards, 1);
+    twoCards = Functions.deckToString(playCards, 2);
+    threeCards = Functions.deckToString(playCards, 3);
+    fourCards = Functions.deckToString(playCards, 4);
+    fiveCards = Functions.deckToString(playCards, 5);
+    sixCards = Functions.deckToString(playCards, 6);
+    sevenCards = Functions.deckToString(playCards, 7);
+
+    Player p1 = new Player(oneCards, 1, false);
+    Player p2 = new Player(twoCards, 2, true);
+    Player p3 = new Player(threeCards, 3, true);
+    Player p4 = new Player(fourCards, 4, true);
+    Player p5 = new Player(fiveCards, 5, true);
+    Player p6 = new Player(sixCards, 6, true);
+    Player p7 = new Player(sevenCards, 7, true);
+
+    Player[] players = new Player[]{p1,p2,p3,p4,p5,p6,p7};
+    int[] scoreboard = new int[]{p1.getScore(),p2.getScore(),p3.getScore(),p4.getScore(),p5.getScore(),p6.getScore(),p7.getScore()};
+    System.out.printf("Here are your cards: %s\n",p1.getCards());
+    String desire = new String("");
+    int pAsk = 0;
+    //Game Loop
+    while(true){
+      for(int playerTurn = 0; playerTurn < playerCount; playerTurn++){
+        scoreboard[playerTurn] = players[playerTurn].getScore();
+        if(players[playerTurn].getAI() == true){
+          System.out.println("What player would you like to ask? Please enter a number from 2 to "+playerCount+".");
+          pAsk = scan.nextInt();
+          while(pAsk == 1 || pAsk>playerCount){
+            if(!(pAsk!=1) || !(pAsk<playerCount)){
+              System.out.println("Enter a valid player. 2-"+playerCount+"!");
+              pAsk = scan.nextInt();
+            }
+          }
+          System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
+          desire = scan.next();
+          //Work on creating the logic that checks to make sure if desire is within oneset
+          //Index through oneSet to check if desire is within
+          Player.cardAsk(p1, players[pAsk-1], desire);
+        }
+        System.out.println(players[playerTurn]);
+      }
+
+      break;
+    }
     scan.close();
-    cardAsk(playCards,1,2,want);
   }
 }
