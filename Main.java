@@ -9,7 +9,7 @@ class Main {
     Functions.Global.deck = Functions.shufle();
     //Get the proper number of other bots
     //REPLACE THIS REMOVE THE COMMENTS PLEASSSEEEE
-    int playerCount = 2;
+    int playerCount = 3;
     /* 
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
@@ -56,13 +56,16 @@ class Main {
         if(players[playerTurn].getAI() == true){
           System.out.println("What player would you like to ask? Please enter a number from 2 to "+playerCount+".");
           pAsk = scan.nextInt();
-
-          //Work on this, logic isn't working the way it should
-          while(!(playerCount <= 2 && playerCount <= playerCount)){
-            System.out.println("Enter a valid player. 2-"+playerCount+"!");
-            pAsk = scan.nextInt();
+          while(pAsk == 1 || pAsk>playerCount){
+            if(!(pAsk!=1) || !(pAsk<playerCount)){
+              System.out.println("Enter a valid player. 2-"+playerCount+"!");
+              pAsk = scan.nextInt();
+            }
           }
+          System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
           desire = scan.next();
+          //Work on creating the logic that checks to make sure if desire is within oneset
+          //Index through oneSet to check if desire is within
           Player.cardAsk(p1, players[pAsk-1], desire);
         }
         System.out.println(players[playerTurn]);
