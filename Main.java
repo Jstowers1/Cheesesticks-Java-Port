@@ -3,10 +3,6 @@ import java.util.Arrays;
 import java.util.*;
 
 class Main {
-  @Override
-  public String toString() {
-    return "The string representation";
-  }
 
   //Master Deck, do not touch!
   public static class Global {
@@ -144,11 +140,43 @@ class Main {
     return false;
   }
 
+  public static Object[] toObj(String[] playerCards){
+    Object[] newArr = new Object[playerCards.length];
+    for(int i = 0; i < playerCards.length;i++){
+      newArr[i] = playerCards[i];
+    }
+    return newArr;
+  }
+  
+  //Pass values to ask and remove cards when a player asks for cards
+  public static void cardAsk(Object[][] playerDeck, int playerAsk, int playerDraw, String wantCard){
+    String[] ask = new String[5];
+    String[] draw = new String[5];
+    ask = deckToString(playerDeck,playerAsk);
+    draw = deckToString(playerDeck,playerDraw);
+    int count = 0;
+    for(int i = 0; i < draw.length; i++){
+      if(draw[i].equals(wantCard)){
+        count++;
+      }
+    }
+    System.out.println(count);
+  
+    for(int i2 = 0; i2<= count; i2++){
+      //System.out.pritn
+      playerDeck[playerAsk][0] = addArray(toObj(ask),wantCard,true);
+      playerDeck[playerDraw][0] = addArray(toObj(draw),wantCard,false);
+    }
+    System.out.println(Arrays.deepToString(playerDeck));
+  }
+  
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
     System.out.println("Welcome to Cheesesticks!");
     Global.deck = shufle();
     //Get the proper number of other bots
+
+    //REPLACE THIS REMOVE THE COMMENTS PLEASSSEEEE
     int playerCount = 3;
     /* 
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
@@ -185,7 +213,11 @@ class Main {
      * Check if there's 4 of a kind in someone's hand
      * Turn player array's into two strings, compare from there, add the value to player array, remove from other
      */
-
+    System.out.println(Arrays.deepToString(playCards));
+    String want = new String("");
+    System.out.println("INPUT CARD");
+    want = scan.next();
     scan.close();
+    cardAsk(playCards,1,2,want);
   }
 }
