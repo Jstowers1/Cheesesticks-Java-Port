@@ -10,6 +10,9 @@ public class Functions {
     public static String[] oneSet = new String[]{"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
     public static String[] filler = new String[]{"7","7","7","7","7","7","7"};
   }
+  public static String getSet() {
+    return Arrays.toString(Global.oneSet);
+  }
   
   //Add/Subtract to a list
   //FALSE IS TO SUBTRACT
