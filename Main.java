@@ -66,9 +66,26 @@ class Main {
           }
           System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
           desire = scan.next();
-          for(int cardIndex = 0; cardIndex < Functions.Global.oneSet.length; cardIndex++){
-            if(Functions.Global.oneSet[cardIndex].equals(desire)){
-              System.out.println("TRUE!");
+          boolean cardCheck = false;
+          boolean loopCheck = false;
+
+          //WORK HERE
+          //Maybe turn into a recersive function?
+          while(cardCheck == false){
+            for(int cardIndex = 0; cardIndex < Functions.Global.oneSet.length; cardIndex++){
+              System.out.println("INDEX! "+cardIndex);
+              if(Functions.Global.oneSet[cardIndex].equals(desire)){
+                System.out.println("TRUE!");
+                cardCheck = true;
+              }else{
+                cardIndex = -1;
+              }
+              if(cardCheck == false){
+                System.out.println("False :(");
+                desire = scan.next();
+              }else{
+                break;
+              }
             }
           }
 
