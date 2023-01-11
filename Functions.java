@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.*;
 
 public class Functions {
-    
+  //Testing 123
   //Master Deck, do not touch!
   public static class Global {
     public static Object[] deck = new Object[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
