@@ -64,8 +64,6 @@ class Main {
           }
           System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
           desire = scan.next();
-          //Work on creating the logic that checks to make sure if desire is within oneset
-          //Index through oneSet to check if desire is within
           Player.cardAsk(p1, players[pAsk-1], desire);
         }
         System.out.println(players[playerTurn]);
