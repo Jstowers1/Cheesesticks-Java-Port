@@ -12,14 +12,14 @@ class Main {
     //Get the proper number of other bots
     //REPLACE THIS REMOVE THE COMMENTS PLEASSSEEEE
     int playerCount = 3;
-    /* 
+    
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
     while(!(playerCount >= 2 && playerCount <= 7)){
       System.out.println("Enter a proper value. 2-7 bots?");
       playerCount = scan.nextInt();
     }
-    */
+    
     Object[][] playCards = new Object[7][1];
     playCards = Functions.playerDeck(playerCount);
     String[] oneCards = new String[5];
@@ -51,6 +51,7 @@ class Main {
     System.out.printf("Here are your cards: %s\n",p1.getCards());
     String desire = new String("");
     int pAsk = 0;
+
     //Game Loop
     while(true){
       for(int playerTurn = 0; playerTurn < playerCount; playerTurn++){
@@ -67,24 +68,21 @@ class Main {
           System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
           desire = scan.next();
           boolean cardCheck = false;
-          boolean loopCheck = false;
-
           //WORK HERE
           //Maybe turn into a recersive function?
           while(cardCheck == false){
-            for(int cardIndex = 0; cardIndex < Functions.Global.oneSet.length; cardIndex++){
-              System.out.println("INDEX! "+cardIndex);
+            int cardIndex = 0;
+            while(cardIndex < Functions.Global.oneSet.length){
               if(Functions.Global.oneSet[cardIndex].equals(desire)){
-                System.out.println("TRUE!");
                 cardCheck = true;
-              }else{
-                cardIndex = -1;
               }
-              if(cardCheck == false){
-                System.out.println("False :(");
+              cardIndex++;
+              if(desire.equals("A")){
+                cardCheck = true;
+              }
+              if(cardIndex == 12 && cardCheck == false){
+                System.out.println("WRONG!!!!");
                 desire = scan.next();
-              }else{
-                break;
               }
             }
           }
