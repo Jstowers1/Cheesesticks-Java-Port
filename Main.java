@@ -4,7 +4,10 @@ import java.util.*;
 
 class Main {
   //testing123
-  
+  public static void clear(){
+    System.out.print("\033[H\033[2J");
+      System.out.flush();
+  }
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
     System.out.println("Welcome to Cheesesticks!");
@@ -48,15 +51,18 @@ class Main {
 
     Player[] players = new Player[]{p1,p2,p3,p4,p5,p6,p7};
     int[] scoreboard = new int[]{p1.getScore(),p2.getScore(),p3.getScore(),p4.getScore(),p5.getScore(),p6.getScore(),p7.getScore()};
-    System.out.printf("Here are your cards: %s\n",p1.getCards());
     String desire = new String("");
     int pAsk = 0;
-
+    clear();
     //Game Loop
     while(true){
+      
       for(int playerTurn = 0; playerTurn < playerCount; playerTurn++){
         scoreboard[playerTurn] = players[playerTurn].getScore();
-        if(players[playerTurn].getAI() == true){
+        if(players[playerTurn].getAI() == false){
+          System.out.printf("Here are your cards: %s\n",p1.getCards());
+          System.out.println(p2.getCards());
+
           System.out.println("What player would you like to ask? Please enter a number from 2 to "+playerCount+".");
           pAsk = scan.nextInt();
           while(pAsk == 1 || pAsk>playerCount){
@@ -67,9 +73,8 @@ class Main {
           }
           System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
           desire = scan.next();
+          desire = desire.toUpperCase();
           boolean cardCheck = false;
-          //WORK HERE
-          //Maybe turn into a recersive function?
           while(cardCheck == false){
             int cardIndex = 0;
             while(cardIndex < Functions.Global.oneSet.length){
@@ -81,20 +86,19 @@ class Main {
                 cardCheck = true;
               }
               if(cardIndex == 12 && cardCheck == false){
-                System.out.println("WRONG!!!!");
+                System.out.println("That was not a valid card. The deck to choose from is: "+Functions.getSet());
                 desire = scan.next();
+                desire = desire.toUpperCase();
               }
             }
           }
-
-
           Player.cardAsk(p1, players[pAsk-1], desire);
         }
-        System.out.println(players[playerTurn]);
+        if(players[playerTurn].getAI() == true){
+          System.out.println("AI Turn...");
+        }
       }
-
-      break;
     }
-    scan.close();
+    //scan.close();
   }
 }
