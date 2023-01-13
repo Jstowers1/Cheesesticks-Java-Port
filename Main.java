@@ -60,40 +60,79 @@ class Main {
       for(int playerTurn = 0; playerTurn < playerCount; playerTurn++){
         scoreboard[playerTurn] = players[playerTurn].getScore();
         if(players[playerTurn].getAI() == false){
+          System.out.println("Here is the current score:");
+          for(int scoreCheck = 0; scoreCheck < playerCount; scoreCheck++){
+            System.out.printf("Player %s's score: %s\n", players[scoreCheck].playerNum, players[scoreCheck].getScore());
+          }
+          System.out.println("");
           System.out.printf("Here are your cards: %s\n",p1.getCards());
           System.out.println(p2.getCards());
+          System.out.println("You can do two things, check for a Cheesestick, or ask for a card.\nPlease type either \"Cheesestick\" or \"Ask\".");
+          String move = new String("");
 
-          System.out.println("What player would you like to ask? Please enter a number from 2 to "+playerCount+".");
-          pAsk = scan.nextInt();
-          while(pAsk == 1 || pAsk>playerCount){
-            if(!(pAsk!=1) || !(pAsk<playerCount)){
-              System.out.println("Enter a valid player. 2-"+playerCount+"!");
-              pAsk = scan.nextInt();
+          //FALSE - CHEESECHECK
+          //TRUE - ASK
+          Boolean moveCheck = false;
+          Boolean moveConfirm = false;
+          move = scan.next();
+          move = move.toUpperCase();
+          while(moveCheck == false){
+            if(move.equals("CHEESESTICK") || move.equals("ASK")){
+              moveConfirm = true;
+              if(move.equals("CHEESESTICK")){
+                moveCheck = false;
+              }
+              if(move.equals("ASK")){
+                moveCheck = true;
+              }
+              break;
+            }else{
+              System.out.println("Please enter a valid move.\nYour options are either \"Cheesestick\" or \"Ask\".");
+              move = scan.next();
+              move = move.toUpperCase();
             }
           }
-          System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
-          desire = scan.next();
-          desire = desire.toUpperCase();
-          boolean cardCheck = false;
-          while(cardCheck == false){
-            int cardIndex = 0;
-            while(cardIndex < Functions.Global.oneSet.length){
-              if(Functions.Global.oneSet[cardIndex].equals(desire)){
-                cardCheck = true;
-              }
-              cardIndex++;
-              if(desire.equals("A")){
-                cardCheck = true;
-              }
-              if(cardIndex == 12 && cardCheck == false){
-                System.out.println("That was not a valid card. The deck to choose from is: "+Functions.getSet());
-                desire = scan.next();
-                desire = desire.toUpperCase();
+
+          //Code for asking cards
+          if(moveConfirm == true){
+            System.out.println("What player would you like to ask? Please enter a number from 2 to "+playerCount+".");
+            pAsk = scan.nextInt();
+            while(pAsk == 1 || pAsk>playerCount){
+              if(!(pAsk!=1) || !(pAsk<playerCount)){
+                System.out.println("Enter a valid player. 2-"+playerCount+"!");
+                pAsk = scan.nextInt();
               }
             }
+            System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
+            desire = scan.next();
+            desire = desire.toUpperCase();
+            boolean cardCheck = false;
+            while(cardCheck == false){
+              int cardIndex = 0;
+              while(cardIndex < Functions.Global.oneSet.length){
+                if(Functions.Global.oneSet[cardIndex].equals(desire)){
+                  cardCheck = true;
+                }
+                cardIndex++;
+                if(desire.equals("A")){
+                  cardCheck = true;
+                }
+                if(cardIndex == 12 && cardCheck == false){
+                  System.out.println("That was not a valid card. The deck to choose from is: "+Functions.getSet());
+                  desire = scan.next();
+                  desire = desire.toUpperCase();
+                }
+              }
+            }
+            Player.cardAsk(p1, players[pAsk-1], desire);
+          }else{ //Work on this line of code specifically, cheesestick move isn't working properly!
+            Player.cheeseCheck(p1);
           }
-          Player.cardAsk(p1, players[pAsk-1], desire);
-        }
+
+          }
+
+
+
         if(players[playerTurn].getAI() == true){
           System.out.println("AI Turn...");
         }
