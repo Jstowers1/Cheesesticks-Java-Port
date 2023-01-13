@@ -35,9 +35,16 @@ public static void cardAsk(Player pAsk, Player pDraw, String wantCard){
       count++;
     }
   }
-  for(int adding = 0; adding < count; adding++){
-    pAsk.cards = Functions.addArrayStr(pAsk.cards, wantCard, true);
-    pDraw.cards = Functions.addArrayStr(pDraw.cards, wantCard, false);
+  if(count > 0){
+    if(pAsk.getAI() == false){
+      //WORK ON THIS
+      System.out.printf("Congratulations! You got %s cards of %s from %s!\n"count, wantCard, pDraw);)
+    }
+    for(int adding = 0; adding < count; adding++){
+      pAsk.cards = Functions.addArrayStr(pAsk.cards, wantCard, true);
+      pDraw.cards = Functions.addArrayStr(pDraw.cards, wantCard, false);
+    }
   }
+  
 }
 }
