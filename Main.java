@@ -76,7 +76,7 @@ class Main {
           Boolean moveConfirm = false;
           move = scan.next();
           move = move.toUpperCase();
-          while(moveCheck == false){
+          while(moveConfirm == false){
             if(move.equals("CHEESESTICK") || move.equals("ASK")){
               moveConfirm = true;
               if(move.equals("CHEESESTICK")){
@@ -94,7 +94,7 @@ class Main {
           }
 
           //Code for asking cards
-          if(moveConfirm == true){
+          if(moveCheck == true){
             System.out.println("What player would you like to ask? Please enter a number from 2 to "+playerCount+".");
             pAsk = scan.nextInt();
             while(pAsk == 1 || pAsk>playerCount){
@@ -128,11 +128,8 @@ class Main {
           }else{ //Work on this line of code specifically, cheesestick move isn't working properly!
             Player.cheeseCheck(p1);
           }
-
           }
-
-
-
+        clear();
         if(players[playerTurn].getAI() == true){
           System.out.println("AI Turn...");
         }
