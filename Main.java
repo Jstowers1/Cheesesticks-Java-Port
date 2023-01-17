@@ -129,9 +129,18 @@ class Main {
             Player.cheeseCheck(p1);
           }
           }
-        clear();
+        //clear();
         if(players[playerTurn].getAI() == true){
           System.out.println("AI Turn...");
+          boolean aiPlayerAsk = false;
+          int aiPlayer = 0;
+          while(!aiPlayerAsk){
+            Functions.getRandomNumber(1,playerCount-1);
+            if(aiPlayer != players[playerTurn].getPlayerNum()-1){
+              aiPlayerAsk = true;
+            }
+          }
+          System.out.println(aiPlayer + " HELLO I AM PLAYER " + players[playerTurn].getPlayerNum() + " AND THAT WAS THE PLAYER I WAS ASKING!");
         }
       }
     }

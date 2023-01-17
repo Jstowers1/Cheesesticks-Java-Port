@@ -27,6 +27,9 @@ public boolean getAI(){
 public int getScore(){
   return score;
 }
+public int getPlayerNum(){
+  return playerNum;
+}
 
 
 //Pass values to ask and remove cards when a player asks for cards
@@ -55,8 +58,8 @@ public static void cardAsk(Player pAsk, Player pDraw, String wantCard){
     if(pAsk.getAI() == false){
       System.out.printf("Player %s did not have any of your requested cards.\n", pDraw.playerNum);
     }
-    pAsk.cards = Functions.addArray(pAsk.cards, Arrays.toString(Functions.Global.deck).substring(1,2),true);
-    Functions.Global.deck = Functions.addArray(Functions.Global.deck, Arrays.toString(Functions.Global.deck).substring(1,2),false);
+    pAsk.cards = Functions.addArray(pAsk.cards, Functions.Global.deck[0],true);
+    Functions.Global.deck = Functions.addArray(Functions.Global.deck, Functions.Global.deck[0],false);
   }
 }
 
@@ -77,10 +80,12 @@ public static void cheeseCheck(Player player){
           }
         }
       }
-      if(player.getAI() == false && count == 4){
-        System.out.println("That was a valid cheesestick!");
+      if(count == 4){
+        if(player.getAI() == false){
+          System.out.println("That was a valid cheesestick!");
+        }
         player.score++;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 4; i++){
           player.cards = Functions.addArray(player.cards, winningCard, false);
         }
       }
