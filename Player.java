@@ -47,52 +47,43 @@ public static void cardAsk(Player pAsk, Player pDraw, String wantCard){
       }
   }
     for(int adding = 0; adding < count; adding++){
-      pAsk.cards = Functions.addArrayStr(pAsk.cards, wantCard, true);
-      pDraw.cards = Functions.addArrayStr(pDraw.cards, wantCard, false);
+      pAsk.cards = Functions.addArray(pAsk.cards, wantCard, true);
+      pDraw.cards = Functions.addArray(pDraw.cards, wantCard, false);
       }
   }
   if(count == 0){
     if(pAsk.getAI() == false){
       System.out.printf("Player %s did not have any of your requested cards.\n", pDraw.playerNum);
     }
-    pAsk.cards = Functions.addArrayStr(pAsk.cards, Arrays.toString(Functions.Global.deck).substring(1,2),true);
+    pAsk.cards = Functions.addArray(pAsk.cards, Arrays.toString(Functions.Global.deck).substring(1,2),true);
     Functions.Global.deck = Functions.addArray(Functions.Global.deck, Arrays.toString(Functions.Global.deck).substring(1,2),false);
   }
 }
 
 //Check to see if there is 4 of a kind in the deck
-public static void cheeseCheck(Player checkPlay){
+public static void cheeseCheck(Player player){
     int count = 0;
-    String[] player = new String[5];
-    player = checkPlay.cards;
-    System.out.println(Arrays.toString((player)));
-    String play = new String("");
-    String set = new String("");
-    for(int i = 0; i < player.length; i++){
+    String winningCard = "";
+    for(int checkPlayIndex = 0; checkPlayIndex < player.cards.length && count != 4; checkPlayIndex++){
+      //Here is where I have to input the code again if i mess up too badly
       count = 0;
-      int i2 = 0;
-      while(i2 < 13){
-        play = player[i];
-        set = Functions.Global.oneSet[i2];
-        if(play.equals(set)){
-          for(int i4 = 0; i4 < player.length; i4++){
-            if(player[i4].equals(set)){
+      for(int setIndex = 0; setIndex < Functions.Global.oneSet.length; setIndex++){
+        if(player.cards[checkPlayIndex].equals(Functions.Global.oneSet[setIndex])){
+          for(int finalPlayIndex = 0; finalPlayIndex <player.cards.length; finalPlayIndex++){
+            if(player.cards[finalPlayIndex].equals(Functions.Global.oneSet[setIndex])){
               count++;
+              winningCard = (Functions.Global.oneSet[setIndex]);
             }
           }
         }
-        if(count == 4){
-          if(checkPlay.getAI() == false){
-            System.out.println("Congratulations! You had 4 of a kind, and your score has been increased.");
-          }
-          checkPlay.score ++;
-        }
-        i2++;
       }
-      
-    }
-    if(checkPlay.getAI() == false){
-      System.out.println("You do not have a valid Cheesestick.");
-    }
+      if(player.getAI() == false && count == 4){
+        System.out.println("That was a valid cheesestick!");
+        player.score++;
+        for(int i = 0; i < 3; i++){
+          player.cards = Functions.addArray(player.cards, winningCard, false);
+        }
+      }
+    } 
   }
 }

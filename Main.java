@@ -19,12 +19,11 @@ class Main {
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
     while(!(playerCount >= 2 && playerCount <= 7)){
+      System.out.println(Arrays.toString(Functions.Global.deck)+" CURRENT DECK");
       System.out.println("Enter a proper value. 2-7 bots?");
       playerCount = scan.nextInt();
     }
     
-    Object[][] playCards = new Object[7][1];
-    playCards = Functions.playerDeck(playerCount);
     String[] oneCards = new String[5];
     String[] twoCards = new String[5];
     String[] threeCards = new String[5];
@@ -33,14 +32,14 @@ class Main {
     String[] sixCards = new String[5];
     String[] sevenCards = new String[5];
 
-    oneCards = Functions.deckToString(playCards, 1);
-    twoCards = Functions.deckToString(playCards, 2);
-    threeCards = Functions.deckToString(playCards, 3);
-    fourCards = Functions.deckToString(playCards, 4);
-    fiveCards = Functions.deckToString(playCards, 5);
-    sixCards = Functions.deckToString(playCards, 6);
-    sevenCards = Functions.deckToString(playCards, 7);
-
+    oneCards = Functions.cardDivide(playerCount, 1);
+    twoCards = Functions.cardDivide(playerCount, 2);
+    threeCards = Functions.cardDivide(playerCount, 3);
+    fourCards = Functions.cardDivide(playerCount, 4);
+    fiveCards = Functions.cardDivide(playerCount, 5);
+    sixCards = Functions.cardDivide(playerCount, 6);
+    sevenCards = Functions.cardDivide(playerCount, 7);
+    
     Player p1 = new Player(oneCards, 1, false);
     Player p2 = new Player(twoCards, 2, true);
     Player p3 = new Player(threeCards, 3, true);
@@ -64,6 +63,7 @@ class Main {
           for(int scoreCheck = 0; scoreCheck < playerCount; scoreCheck++){
             System.out.printf("Player %s's score: %s\n", players[scoreCheck].playerNum, players[scoreCheck].getScore());
           }
+          System.out.println(Arrays.toString(Functions.Global.deck)+" CURRENT DECK");
           System.out.println("");
           System.out.printf("Here are your cards: %s\n",p1.getCards());
           System.out.println(p2.getCards());
