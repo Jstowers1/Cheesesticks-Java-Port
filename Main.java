@@ -134,13 +134,17 @@ class Main {
           System.out.println("AI Turn...");
           boolean aiPlayerAsk = false;
           int aiPlayer = 0;
+          String aiCard = "";
           while(!aiPlayerAsk){
-            Functions.getRandomNumber(1,playerCount-1);
-            if(aiPlayer != players[playerTurn].getPlayerNum()-1){
+            aiPlayer = Functions.getRandomNumber(1,playerCount);
+            if(aiPlayer != players[playerTurn].getPlayerNum()){
               aiPlayerAsk = true;
             }
+            aiPlayer = Functions.getRandomNumber(1,playerCount);
           }
-          System.out.println(aiPlayer + " HELLO I AM PLAYER " + players[playerTurn].getPlayerNum() + " AND THAT WAS THE PLAYER I WAS ASKING!");
+          aiCard = Functions.Global.oneSet[Functions.getRandomNumber(0,12)];
+          Player.cardAsk(players[playerTurn],players[aiPlayer-1],aiCard);
+          Player.cheeseCheck(players[playerTurn]);
         }
       }
     }

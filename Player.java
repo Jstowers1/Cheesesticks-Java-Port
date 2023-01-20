@@ -58,8 +58,14 @@ public static void cardAsk(Player pAsk, Player pDraw, String wantCard){
     if(pAsk.getAI() == false){
       System.out.printf("Player %s did not have any of your requested cards.\n", pDraw.playerNum);
     }
-    pAsk.cards = Functions.addArray(pAsk.cards, Functions.Global.deck[0],true);
-    Functions.Global.deck = Functions.addArray(Functions.Global.deck, Functions.Global.deck[0],false);
+    if(Functions.Global.deck.length != 0){
+      pAsk.cards = Functions.addArray(pAsk.cards, Functions.Global.deck[0],true);
+      Functions.Global.deck = Functions.addArray(Functions.Global.deck, Functions.Global.deck[0],false);
+    }else{
+      if(pAsk.getAI() == false){
+        System.out.println("Sorry!! The deck is out of cards!");
+      }
+    }
   }
 }
 
