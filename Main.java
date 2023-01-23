@@ -1,6 +1,6 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.*;
+
 
 class Main {
   //testing123
@@ -124,6 +124,7 @@ class Main {
                 }
               }
             }
+            clear();
             Player.cardAsk(p1, players[pAsk-1], desire);
           }else{ //Work on this line of code specifically, cheesestick move isn't working properly!
             Player.cheeseCheck(p1);
@@ -132,6 +133,7 @@ class Main {
         //clear();
         if(players[playerTurn].getAI() == true){
           System.out.println("AI Turn...");
+          //TimeUnit.SECONDS.sleep(5);
           boolean aiPlayerAsk = false;
           int aiPlayer = 0;
           String aiCard = "";
