@@ -13,7 +13,6 @@ class Main {
     System.out.println("Welcome to Cheesesticks!");
     Functions.Global.deck = Functions.shufle();
     //Get the proper number of other bots
-    //REPLACE THIS REMOVE THE COMMENTS PLEASSSEEEE
     int playerCount = 3;
     
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
@@ -54,10 +53,11 @@ class Main {
     Boolean[] emptHands = new Boolean[]{p1.getHand(),p2.getHand(),p3.getHand(),p4.getHand(),p5.getHand(),p6.getHand(),p7.getHand()};
     String desire = new String("");
     int pAsk = 0;
+    int gameEnd = 0;
+    boolean gameConsole = true;
     clear();
     //Game Loop
-    while(true){
-      
+    while(gameConsole){
       for(int playerTurn = 0; playerTurn < playerCount; playerTurn++){
         scoreboard[playerTurn] = players[playerTurn].getScore();
         allCards[playerTurn] = players[playerTurn].getCards();
@@ -132,7 +132,7 @@ class Main {
             }
             clear();
             Player.cardAsk(p1, players[pAsk-1], desire);
-          }else{ //Work on this line of code specifically, cheesestick move isn't working properly!
+          }else{ 
             Player.cheeseCheck(p1);
           }
           }
@@ -154,8 +154,17 @@ class Main {
           Player.cardAsk(players[playerTurn],players[aiPlayer-1],aiCard);
           Player.cheeseCheck(players[playerTurn]);
         }
+        for(int gameFinisher = 0; gameFinisher <playerCount; gameFinisher++){
+          if(players[gameFinisher].getHand() == true){
+            gameEnd++;
+          }
+          if(gameEnd == playerCount){
+            gameConsole = false;
+          }
+          
+        }
       }
     }
-    //scan.close();
+    scan.close();
   }
 }
