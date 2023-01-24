@@ -50,6 +50,8 @@ class Main {
 
     Player[] players = new Player[]{p1,p2,p3,p4,p5,p6,p7};
     int[] scoreboard = new int[]{p1.getScore(),p2.getScore(),p3.getScore(),p4.getScore(),p5.getScore(),p6.getScore(),p7.getScore()};
+    String[] allCards = new String[]{p1.getCards(), p2.getCards(), p3.getCards(), p4.getCards(), p5.getCards(), p6.getCards(), p7.getCards()};
+    Boolean[] emptHands = new Boolean[]{p1.getHand(),p2.getHand(),p3.getHand(),p4.getHand(),p5.getHand(),p6.getHand(),p7.getHand()};
     String desire = new String("");
     int pAsk = 0;
     clear();
@@ -58,6 +60,8 @@ class Main {
       
       for(int playerTurn = 0; playerTurn < playerCount; playerTurn++){
         scoreboard[playerTurn] = players[playerTurn].getScore();
+        allCards[playerTurn] = players[playerTurn].getCards();
+        emptHands[playerTurn] = players[playerTurn].updateHand(players[playerTurn]);
         if(players[playerTurn].getAI() == false){
           System.out.println("Here is the current score:");
           for(int scoreCheck = 0; scoreCheck < playerCount; scoreCheck++){
@@ -67,6 +71,8 @@ class Main {
           System.out.println("");
           System.out.printf("Here are your cards: %s\n",p1.getCards());
           System.out.println(p2.getCards());
+          System.out.println(Arrays.toString(allCards));
+          System.out.println(Arrays.toString(emptHands));
           System.out.println("You can do two things, check for a Cheesestick, or ask for a card.\nPlease type either \"Cheesestick\" or \"Ask\".");
           String move = new String("");
 

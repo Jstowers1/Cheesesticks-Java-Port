@@ -1,18 +1,18 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.*;
 class Player{
-  //Testing 123
   String[] cards = new String[5];
   Object[] carObj = new Object[5];
   int playerNum;
   boolean ai;
   int score = 0;
+  boolean emptHand;
+
   public Player(String[] array,int playerNumber, boolean aiCheck){
     cards = array;
     carObj = array;
     playerNum = playerNumber;
     ai = aiCheck;
+    emptHand = false;
   }
 
 public String toString() {
@@ -23,6 +23,9 @@ public String getCards(){
 }
 public boolean getAI(){
   return ai;
+}
+public boolean getHand(){
+  return emptHand;
 }
 public int getScore(){
   return score;
@@ -97,4 +100,15 @@ public static void cheeseCheck(Player player){
       }
     } 
   }
+public static Boolean updateHand(Player playing){
+  if(playing.cards.length == 0){
+    playing.emptHand = true;
+    return playing.getHand();
+  }else if(playing.cards.length != 0){
+    playing.emptHand = false;
+    return playing.getHand();
+  }
+  return true;
+}
+
 }
