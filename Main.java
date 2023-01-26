@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.*;
 
 
@@ -70,7 +71,6 @@ class Main {
           System.out.println(Arrays.toString(Functions.Global.deck)+" CURRENT DECK");
           System.out.println("");
           System.out.printf("Here are your cards: %s\n",p1.getCards());
-          System.out.println(p2.getCards());
           System.out.println(Arrays.toString(allCards));
           System.out.println(Arrays.toString(emptHands));
           System.out.println("You can do two things, check for a Cheesestick, or ask for a card.\nPlease type either \"Cheesestick\" or \"Ask\".");
@@ -154,6 +154,7 @@ class Main {
           Player.cardAsk(players[playerTurn],players[aiPlayer-1],aiCard);
           Player.cheeseCheck(players[playerTurn]);
         }
+        gameEnd = 1;
         for(int gameFinisher = 0; gameFinisher <playerCount; gameFinisher++){
           if(players[gameFinisher].getHand() == true){
             gameEnd++;
@@ -166,5 +167,18 @@ class Main {
       }
     }
     scan.close();
+    String[] placement = new String[]{"First Place", "Second Place ","Third Place ", "Fourth Place ", "Fifth Place ", "Sixth Place ", "Seventh Place "};
+    int place = 0;
+    Arrays.sort(scoreboard);
+    Collections.reverse(Arrays.asList(scoreboard));
+    System.out.println("The grand game comes to a halt! Here's the scores!");
+    for(Player scoreCreate: players){
+      for(int scoreCheck: scoreboard){
+        if(scoreCreate.getScore() == scoreCheck){
+          System.out.printf("Player %s got %s with a score of %s!\n",scoreCreate.getPlayerNum(),placement[place], scoreCheck);
+        }
+      }
+      place++;
+    }
   }
 }
