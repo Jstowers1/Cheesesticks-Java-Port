@@ -36,7 +36,7 @@ public int getPlayerNum(){
 
 
 //Pass values to ask and remove cards when a player asks for cards
-public static void cardAsk(Player pAsk, Player pDraw, String wantCard){
+public static String cardAsk(Player pAsk, Player pDraw, String wantCard){
   int count = 0;
   for(int emCheck = 0; emCheck < pDraw.cards.length; emCheck++){
     if(pDraw.cards[emCheck].equals(wantCard)){
@@ -47,9 +47,9 @@ public static void cardAsk(Player pAsk, Player pDraw, String wantCard){
     if(pAsk.getAI() == false){
       //WORK ON THIS
       if(count > 1){
-        System.out.printf("Congratulations! You got %s cards of %s from player %s!\n",count, wantCard, pDraw.playerNum);
+        return ("Congratulations! You got "+count+" cards of "+wantCard+" from player "+pDraw.playerNum+"!");
       }else if(count == 1){
-        System.out.printf("Congratulations! You got %s card of %s from player %s!\n",count, wantCard, pDraw.playerNum);
+        return ("Congratulations! You got "+count+" card of "+wantCard+" from player "+pDraw.playerNum+"!");
       }
   }
     for(int adding = 0; adding < count; adding++){
@@ -59,17 +59,18 @@ public static void cardAsk(Player pAsk, Player pDraw, String wantCard){
   }
   if(count == 0){
     if(pAsk.getAI() == false){
-      System.out.printf("Player %s did not have any of your requested cards.\n", pDraw.playerNum);
+      return("Player "+pDraw.playerNum+" did not have any of your requested cards.");
     }
     if(Functions.Global.deck.length != 0){
       pAsk.cards = Functions.addArray(pAsk.cards, Functions.Global.deck[0],true);
       Functions.Global.deck = Functions.addArray(Functions.Global.deck, Functions.Global.deck[0],false);
     }else{
       if(pAsk.getAI() == false){
-        System.out.println("Sorry!! The deck is out of cards!");
+        return("Sorry!! The deck is out of cards!");
       }
     }
   }
+  return("No valid move!");
 }
 
 //Check to see if there is 4 of a kind in the deck
@@ -77,7 +78,6 @@ public static void cheeseCheck(Player player){
     int count = 0;
     String winningCard = "";
     for(int checkPlayIndex = 0; checkPlayIndex < player.cards.length && count != 4; checkPlayIndex++){
-      //Here is where I have to input the code again if i mess up too badly
       count = 0;
       for(int setIndex = 0; setIndex < Functions.Global.oneSet.length; setIndex++){
         if(player.cards[checkPlayIndex].equals(Functions.Global.oneSet[setIndex])){
@@ -110,5 +110,7 @@ public static Boolean updateHand(Player playing){
   }
   return true;
 }
-
+public static String scoreBoard(Player playing){
+  return (playing.getPlayerNum()+" "+playing.getScore());
+}
 }

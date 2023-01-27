@@ -15,7 +15,32 @@ class Main {
     Functions.Global.deck = Functions.shufle();
     //Get the proper number of other bots
     int playerCount = 3;
-    
+    String instructRule = new String("");
+    boolean instructCheck = false;
+    boolean inputCheck = false;
+
+    //Continue working on this
+    System.out.println("Do you already know how to play cheesesticks?\n Say yes or no!");
+    instructRule = scan.next();
+    instructRule = instructRule.toLowerCase();
+    while(inputCheck == false){
+      if(instructRule.equals("yes") || instructRule.equals("no")){
+        inputCheck = true;
+        if(instructRule.equals("yes")){
+          moveCheck = false;
+        }
+        if(move.equals("ASK")){
+          moveCheck = true;
+        }
+        break;
+      }else{
+        System.out.println("Please enter a valid move.\nYour options are either \"Cheesestick\" or \"Ask\".");
+        move = scan.next();
+        move = move.toLowerrCase();
+      }
+    }
+
+
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
     while(!(playerCount >= 2 && playerCount <= 7)){
@@ -47,7 +72,17 @@ class Main {
     Player p5 = new Player(fiveCards, 5, true);
     Player p6 = new Player(sixCards, 6, true);
     Player p7 = new Player(sevenCards, 7, true);
-
+    
+    /*
+    Debugging tools, no touching!
+    p1.score = 3;
+    p2.score = 6;
+    p3.score = 0;
+    p4.score = 1;
+    p5.score = 7;
+    p6.score = 2;
+    p7.score = 8;
+    */
     Player[] players = new Player[]{p1,p2,p3,p4,p5,p6,p7};
     int[] scoreboard = new int[]{p1.getScore(),p2.getScore(),p3.getScore(),p4.getScore(),p5.getScore(),p6.getScore(),p7.getScore()};
     String[] allCards = new String[]{p1.getCards(), p2.getCards(), p3.getCards(), p4.getCards(), p5.getCards(), p6.getCards(), p7.getCards()};
@@ -56,6 +91,7 @@ class Main {
     int pAsk = 0;
     int gameEnd = 0;
     boolean gameConsole = true;
+    String result = new String("This is the first move, there was no last move!");
     clear();
     //Game Loop
     while(gameConsole){
@@ -68,7 +104,7 @@ class Main {
           for(int scoreCheck = 0; scoreCheck < playerCount; scoreCheck++){
             System.out.printf("Player %s's score: %s\n", players[scoreCheck].playerNum, players[scoreCheck].getScore());
           }
-          System.out.println(Arrays.toString(Functions.Global.deck)+" CURRENT DECK");
+          System.out.println("Last move results!!\n"+result);
           System.out.println("");
           System.out.printf("Here are your cards: %s\n",p1.getCards());
           System.out.println(Arrays.toString(allCards));
@@ -131,14 +167,13 @@ class Main {
               }
             }
             clear();
-            Player.cardAsk(p1, players[pAsk-1], desire);
+            result = Player.cardAsk(p1, players[pAsk-1], desire);
           }else{ 
             Player.cheeseCheck(p1);
           }
           }
         //clear();
         if(players[playerTurn].getAI() == true){
-          System.out.println("AI Turn...");
           //TimeUnit.SECONDS.sleep(5);
           boolean aiPlayerAsk = false;
           int aiPlayer = 0;
@@ -167,18 +202,26 @@ class Main {
       }
     }
     scan.close();
+    clear();
     String[] placement = new String[]{"First Place", "Second Place ","Third Place ", "Fourth Place ", "Fifth Place ", "Sixth Place ", "Seventh Place "};
     int place = 0;
     Arrays.sort(scoreboard);
-    Collections.reverse(Arrays.asList(scoreboard));
+    int[] temp = new int[scoreboard.length];
+    int temporary = 0;
+    for(int reverse = scoreboard.length-1; reverse>= 0; reverse--){
+      temp[temporary] = scoreboard[reverse];
+      temporary++;
+    }
+    scoreboard = temp;
     System.out.println("The grand game comes to a halt! Here's the scores!");
     for(Player scoreCreate: players){
+      place = -1;
       for(int scoreCheck: scoreboard){
+        place++; 
         if(scoreCreate.getScore() == scoreCheck){
           System.out.printf("Player %s got %s with a score of %s!\n",scoreCreate.getPlayerNum(),placement[place], scoreCheck);
         }
       }
-      place++;
     }
   }
 }
