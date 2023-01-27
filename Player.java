@@ -38,6 +38,7 @@ public int getPlayerNum(){
 //Pass values to ask and remove cards when a player asks for cards
 public static String cardAsk(Player pAsk, Player pDraw, String wantCard){
   int count = 0;
+  String result = new String("No valid move!");
   for(int emCheck = 0; emCheck < pDraw.cards.length; emCheck++){
     if(pDraw.cards[emCheck].equals(wantCard)){
       count++;
@@ -45,11 +46,10 @@ public static String cardAsk(Player pAsk, Player pDraw, String wantCard){
   }
   if(count > 0){
     if(pAsk.getAI() == false){
-      //WORK ON THIS
       if(count > 1){
-        return ("Congratulations! You got "+count+" cards of "+wantCard+" from player "+pDraw.playerNum+"!");
+        result =  ("Congratulations! You got "+count+" cards of "+wantCard+" from player "+pDraw.playerNum+"!");
       }else if(count == 1){
-        return ("Congratulations! You got "+count+" card of "+wantCard+" from player "+pDraw.playerNum+"!");
+        result = ("Congratulations! You got "+count+" card of "+wantCard+" from player "+pDraw.playerNum+"!");
       }
   }
     for(int adding = 0; adding < count; adding++){
@@ -59,18 +59,18 @@ public static String cardAsk(Player pAsk, Player pDraw, String wantCard){
   }
   if(count == 0){
     if(pAsk.getAI() == false){
-      return("Player "+pDraw.playerNum+" did not have any of your requested cards.");
+      result = ("Player "+pDraw.playerNum+" did not have any of your requested cards.");
     }
     if(Functions.Global.deck.length != 0){
       pAsk.cards = Functions.addArray(pAsk.cards, Functions.Global.deck[0],true);
       Functions.Global.deck = Functions.addArray(Functions.Global.deck, Functions.Global.deck[0],false);
     }else{
       if(pAsk.getAI() == false){
-        return("Sorry!! The deck is out of cards!");
+        result = ("Sorry!! The deck is out of cards!");
       }
     }
   }
-  return("No valid move!");
+  return result;
 }
 
 //Check to see if there is 4 of a kind in the deck
