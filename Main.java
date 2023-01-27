@@ -20,6 +20,7 @@ class Main {
     boolean inputCheck = false;
 
     //Continue working on this
+    /*
     System.out.println("Do you already know how to play cheesesticks?\n Say yes or no!");
     instructRule = scan.next();
     instructRule = instructRule.toLowerCase();
@@ -27,9 +28,9 @@ class Main {
       if(instructRule.equals("yes") || instructRule.equals("no")){
         inputCheck = true;
         if(instructRule.equals("yes")){
-          moveCheck = false;
+          instructCheck = false;
         }
-        if(move.equals("ASK")){
+        if(instructRule.equals("no")){
           moveCheck = true;
         }
         break;
@@ -39,7 +40,7 @@ class Main {
         move = move.toLowerrCase();
       }
     }
-
+*/
 
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
