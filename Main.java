@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.*;
 
 
@@ -20,8 +19,8 @@ class Main {
     boolean inputCheck = false;
 
     //Continue working on this
-    /*
-    System.out.println("Do you already know how to play cheesesticks?\n Say yes or no!");
+  
+    System.out.println("Do you already know how to play cheesesticks?\nSay yes or no!");
     instructRule = scan.next();
     instructRule = instructRule.toLowerCase();
     while(inputCheck == false){
@@ -31,17 +30,24 @@ class Main {
           instructCheck = false;
         }
         if(instructRule.equals("no")){
-          moveCheck = true;
+          instructCheck = true;
         }
         break;
       }else{
         System.out.println("Please enter a valid move.\nYour options are either \"Cheesestick\" or \"Ask\".");
-        move = scan.next();
-        move = move.toLowerrCase();
+        instructRule = scan.next();
+        instructRule = instructRule.toLowerCase();
       }
     }
-*/
+    if(instructCheck == true){
+      System.out.println("ok pal. think gofish");
+    }else if(instructCheck == false){
+      System.out.println("pojjers!");
+    }
 
+    System.out.println("Press any letter key and enter to continue.");
+    scan.next();
+    clear();
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
     while(!(playerCount >= 2 && playerCount <= 7)){
@@ -73,17 +79,7 @@ class Main {
     Player p5 = new Player(fiveCards, 5, true);
     Player p6 = new Player(sixCards, 6, true);
     Player p7 = new Player(sevenCards, 7, true);
-    
-    /*
-    Debugging tools, no touching!
-    p1.score = 3;
-    p2.score = 6;
-    p3.score = 0;
-    p4.score = 1;
-    p5.score = 7;
-    p6.score = 2;
-    p7.score = 8;
-    */
+
     Player[] players = new Player[]{p1,p2,p3,p4,p5,p6,p7};
     int[] scoreboard = new int[]{p1.getScore(),p2.getScore(),p3.getScore(),p4.getScore(),p5.getScore(),p6.getScore(),p7.getScore()};
     String[] allCards = new String[]{p1.getCards(), p2.getCards(), p3.getCards(), p4.getCards(), p5.getCards(), p6.getCards(), p7.getCards()};
@@ -108,8 +104,6 @@ class Main {
           System.out.println("Last move results!!\n"+result);
           System.out.println("");
           System.out.printf("Here are your cards: %s\n",p1.getCards());
-          System.out.println(Arrays.toString(allCards));
-          System.out.println(Arrays.toString(emptHands));
           System.out.println("You can do two things, check for a Cheesestick, or ask for a card.\nPlease type either \"Cheesestick\" or \"Ask\".");
           String move = new String("");
 
