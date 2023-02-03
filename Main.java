@@ -3,23 +3,25 @@ import java.util.*;
 
 
 class Main {
-  //testing123
+  //Function to clear the systemm output
   public static void clear(){
     System.out.print("\033[H\033[2J");
       System.out.flush();
   }
+
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
     System.out.println("Welcome to Cheesesticks!");
     Functions.Global.deck = Functions.shufle();
+
     //Get the proper number of other bots
-    int playerCount = 3;
+    int playerCount = 0;
+
+    //Area of code that checks to see if the player knows how to play
     String instructRule = new String("");
     boolean instructCheck = false;
     boolean inputCheck = false;
 
-    //Continue working on this
-  
     System.out.println("Do you already know how to play cheesesticks?\nSay yes or no!");
     instructRule = scan.next();
     instructRule = instructRule.toLowerCase();
@@ -40,7 +42,7 @@ class Main {
       }
     }
     if(instructCheck == true){
-      System.out.println("ok pal. think gofish");
+      System.out.println("Welcome to Cheesesticks! A mystical game where it's you versus up to 6 other AI players!\nIn this game, you try to collect as many full sets of cards as you can!\nOnce you ask around the other AI players and get 4 of a kind, you can say CHEESESTICKS to cash in your cards for a fresh point!\nBe warned though, those you play with are capable of stealing your cards away from you to, forming a fun and endless gameplay loop.\nIf you ask for a card and the player doesn't have said card, then you have to draw a new card from the deck supplied to you.\nGame ends once nobody has any cards left, and the winner is determined by who has the most points!\nHave fun and remember, capitalization does NOT matter!");
     }else if(instructCheck == false){
       System.out.println("pojjers!");
     }
@@ -48,14 +50,16 @@ class Main {
     System.out.println("Press any letter key and enter to continue.");
     scan.next();
     clear();
+
+    //Checks to get the amount of bot players the play chooses
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
     playerCount = scan.nextInt();
     while(!(playerCount >= 2 && playerCount <= 7)){
-      System.out.println(Arrays.toString(Functions.Global.deck)+" CURRENT DECK");
       System.out.println("Enter a proper value. 2-7 bots?");
       playerCount = scan.nextInt();
     }
     
+    //Creates the string arrays that represents every player's cards
     String[] oneCards = new String[5];
     String[] twoCards = new String[5];
     String[] threeCards = new String[5];
@@ -64,6 +68,9 @@ class Main {
     String[] sixCards = new String[5];
     String[] sevenCards = new String[5];
 
+    //Fills the playerCards array with actual values by using cardDivide
+    //Passes the playerCount and the number of said player
+    //For the players that won't be needed, they're passed a phony deck with just "7" in it to not affect gameplay
     oneCards = Functions.cardDivide(playerCount, 1);
     twoCards = Functions.cardDivide(playerCount, 2);
     threeCards = Functions.cardDivide(playerCount, 3);
@@ -72,6 +79,8 @@ class Main {
     sixCards = Functions.cardDivide(playerCount, 6);
     sevenCards = Functions.cardDivide(playerCount, 7);
     
+    //Creates every player object needed. 
+    //Passes the card array, the playerNumber and checks to see if the player will be an AI or not
     Player p1 = new Player(oneCards, 1, false);
     Player p2 = new Player(twoCards, 2, true);
     Player p3 = new Player(threeCards, 3, true);
@@ -80,6 +89,8 @@ class Main {
     Player p6 = new Player(sixCards, 6, true);
     Player p7 = new Player(sevenCards, 7, true);
 
+    //Creates all of the arrays that will be used for logic later down
+    //Most important is the player array, since the game functions by indexing through the array of players
     Player[] players = new Player[]{p1,p2,p3,p4,p5,p6,p7};
     int[] scoreboard = new int[]{p1.getScore(),p2.getScore(),p3.getScore(),p4.getScore(),p5.getScore(),p6.getScore(),p7.getScore()};
     String[] allCards = new String[]{p1.getCards(), p2.getCards(), p3.getCards(), p4.getCards(), p5.getCards(), p6.getCards(), p7.getCards()};
@@ -93,14 +104,18 @@ class Main {
     //Game Loop
     while(gameConsole){
       for(int playerTurn = 0; playerTurn < playerCount; playerTurn++){
+        //Logic to update previous arrays 
         scoreboard[playerTurn] = players[playerTurn].getScore();
         allCards[playerTurn] = players[playerTurn].getCards();
         emptHands[playerTurn] = players[playerTurn].updateHand(players[playerTurn]);
+
+        //Prints out the scoreboard
         if(players[playerTurn].getAI() == false){
           System.out.println("Here is the current score:");
           for(int scoreCheck = 0; scoreCheck < playerCount; scoreCheck++){
             System.out.printf("Player %s's score: %s\n", players[scoreCheck].playerNum, players[scoreCheck].getScore());
           }
+          //Prints out the previous move by the player
           System.out.println("Last move results!!\n"+result);
           System.out.println("");
           System.out.printf("Here are your cards: %s\n",p1.getCards());
@@ -109,6 +124,7 @@ class Main {
 
           //FALSE - CHEESECHECK
           //TRUE - ASK
+          //Logic to see whether or not the player gets a cheesestick or asks another player for cards
           Boolean moveCheck = false;
           Boolean moveConfirm = false;
           move = scan.next();
@@ -140,6 +156,7 @@ class Main {
                 pAsk = scan.nextInt();
               }
             }
+            //Code to ensure the player asks for a valid card
             System.out.println("What card would you like to request from "+pAsk+"?\nHere are the cards you can ask for:"+Functions.getSet());
             desire = scan.next();
             desire = desire.toUpperCase();
@@ -164,12 +181,12 @@ class Main {
             clear();
             result = Player.cardAsk(p1, players[pAsk-1], desire);
           }else{ 
+            //Calls upon the cheeseCheck function
             Player.cheeseCheck(p1);
           }
           }
-        //clear();
+        //AI Player turn
         if(players[playerTurn].getAI() == true){
-          //TimeUnit.SECONDS.sleep(5);
           boolean aiPlayerAsk = false;
           int aiPlayer = 0;
           String aiCard = "";
@@ -198,6 +215,7 @@ class Main {
     }
     scan.close();
     clear();
+    //Sorts out the scoreboard and the player number
     String[] placement = new String[]{"First Place", "Second Place ","Third Place ", "Fourth Place ", "Fifth Place ", "Sixth Place ", "Seventh Place "};
     int place = 0;
     Arrays.sort(scoreboard);
@@ -214,6 +232,7 @@ class Main {
       for(int scoreCheck: scoreboard){
         place++; 
         if(scoreCreate.getScore() == scoreCheck){
+          //Prints the player place alongside the score
           System.out.printf("Player %s got %s with a score of %s!\n",scoreCreate.getPlayerNum(),placement[place], scoreCheck);
         }
       }
