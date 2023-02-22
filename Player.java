@@ -7,6 +7,7 @@ class Player{
   int score = 0;
   boolean emptHand;
 
+  //Constructs the player object
   public Player(String[] array,int playerNumber, boolean aiCheck){
     cards = array;
     carObj = array;
@@ -32,6 +33,10 @@ public int getScore(){
 }
 public int getPlayerNum(){
   return playerNum;
+}
+//Gets the playerScore
+public static String scoreBoard(Player playing){
+  return (playing.getPlayerNum()+" "+playing.getScore());
 }
 
 
@@ -100,6 +105,7 @@ public static void cheeseCheck(Player player){
       }
     } 
   }
+//Updates the array that deterimines wether or not the game ends
 public static Boolean updateHand(Player playing){
   if(playing.cards.length == 0){
     playing.emptHand = true;
@@ -109,8 +115,5 @@ public static Boolean updateHand(Player playing){
     return playing.getHand();
   }
   return true;
-}
-public static String scoreBoard(Player playing){
-  return (playing.getPlayerNum()+" "+playing.getScore());
 }
 }

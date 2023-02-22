@@ -1,15 +1,14 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-
-
 public class Functions {
-  //Testing 123
   //Master Deck, do not touch!
+  //Global funcctions for cards and arrays used across the program
   public static class Global {
     public static String[] deck = new String[] {"2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","2","3","4","5","6","7","8","9","10","J","Q","K","A","A","A","A"};
     public static String[] oneSet = new String[]{"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
     public static String[] filler = new String[]{"7","7","7","7","7","7","7"};
   }
+  //Gets te oneSet array, which is one full set of cards
   public static String getSet() {
     return Arrays.toString(Global.oneSet);
   }
