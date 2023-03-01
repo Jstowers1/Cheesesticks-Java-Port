@@ -16,6 +16,9 @@ class Player{
     emptHand = false;
   }
 
+public void setScore(int newScore){
+  score = newScore;
+}
 public String toString() {
 	return String.format("%s, %s, %s", Arrays.deepToString(cards), playerNum, ai);
 }
@@ -106,7 +109,7 @@ public static void cheeseCheck(Player player){
     } 
   }
 //Updates the array that deterimines wether or not the game ends
-public static Boolean updateHand(Player playing){
+public Boolean updateHand(Player playing){
   if(playing.cards.length == 0){
     playing.emptHand = true;
     return playing.getHand();

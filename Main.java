@@ -1,5 +1,5 @@
-import java.util.Arrays;
 import java.util.*;
+
 
 
 class Main {
@@ -44,12 +44,9 @@ class Main {
     if(instructCheck == true){
       System.out.println("Welcome to Cheesesticks! A mystical game where it's you versus up to 6 other AI players!\nIn this game, you try to collect as many full sets of cards as you can!\nOnce you ask around the other AI players and get 4 of a kind, you can say CHEESESTICKS to cash in your cards for a fresh point!\nBe warned though, those you play with are capable of stealing your cards away from you to, forming a fun and endless gameplay loop.\nIf you ask for a card and the player doesn't have said card, then you have to draw a new card from the deck supplied to you.\nGame ends once nobody has any cards left, and the winner is determined by who has the most points!\nHave fun and remember, capitalization does NOT matter!");
     }else if(instructCheck == false){
-      System.out.println("pojjers!");
+      System.out.println("Glad to hear it!");
     }
-
-    System.out.println("Press any letter key and enter to continue.");
-    scan.next();
-    clear();
+    System.out.println("");
 
     //Checks to get the amount of bot players the play chooses
     System.out.println("How many bots do you want to play with? Answer 2 - 7.");
@@ -215,10 +212,19 @@ class Main {
     }
     scan.close();
     clear();
+
     //Sorts out the scoreboard and the player number
-    String[] placement = new String[]{"First Place", "Second Place ","Third Place ", "Fourth Place ", "Fifth Place ", "Sixth Place ", "Seventh Place "};
-    int place = 0;
-    Arrays.sort(scoreboard);
+    String[] placement = new String[]{"First Place", "Second Place","Third Place", "Fourth Place", "Fifth Place", "Sixth Place", "Seventh Place"};
+    int n = scoreboard.length;  
+    for (int j = 1; j < n; j++) {  
+        int key = scoreboard[j];  
+        int i = j-1;  
+        while ( (i > -1) && (scoreboard[i] > key ) ) {  
+            scoreboard [i+1] = scoreboard [i];  
+            i--;  
+        }  
+        scoreboard[i+1] = key;  
+    }
     int[] temp = new int[scoreboard.length];
     int temporary = 0;
     for(int reverse = scoreboard.length-1; reverse>= 0; reverse--){
@@ -226,14 +232,23 @@ class Main {
       temporary++;
     }
     scoreboard = temp;
-    System.out.println("The grand game comes to a halt! Here's the scores!");
-    for(Player scoreCreate: players){
-      place = -1;
-      for(int scoreCheck: scoreboard){
-        place++; 
-        if(scoreCreate.getScore() == scoreCheck){
-          //Prints the player place alongside the score
-          System.out.printf("Player %s got %s with a score of %s!\n",scoreCreate.getPlayerNum(),placement[place], scoreCheck);
+    int lastIndex = 0;
+    int lastPlayerNum = -1;
+    boolean lastCheck = false;
+    for(int scorePrint = 0; scorePrint<playerCount; scorePrint++){
+      for(int playerConfirm = 0; playerConfirm<playerCount; playerConfirm++){ 
+        if(players[playerConfirm].getScore() == scoreboard[scorePrint]){
+          lastCheck = false;
+          if(players[playerConfirm].getScore() != lastIndex && players[playerConfirm].getPlayerNum() != lastPlayerNum){
+            System.out.printf("Player %s got %s with a score of %s!\n",players[playerConfirm].getPlayerNum(),placement[scorePrint], scoreboard[scorePrint]);
+            lastIndex = players[playerConfirm].getScore();
+            lastPlayerNum = players[playerConfirm].getPlayerNum();
+            lastCheck = true;
+          }
+          if(lastCheck == false){
+            lastIndex = -1;
+            lastCheck = false;
+          }
         }
       }
     }
